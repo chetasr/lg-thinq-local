@@ -10,6 +10,7 @@ import Dev_2RES1VE600FWC from './devices/2RES1VE600FWC'
 import Dev_STUDIO_HOOD from './devices/STUDIO_HOOD'
 import Dev_WMVEM1825 from './devices/WMVEM1825'
 import Dev_WMVEL2137 from './devices/WMVEL2137'
+import H11 from './devices/H11'
 import Y_V8_Y___W_B32QEUK from './devices/Y_V8_Y___W.B32QEUK'
 import F_V8_Y___W_B_2QEUK from './devices/F_V8_Y___W.B_2QEUK'
 import Y_V8_F___W_B_2QEUK from './devices/Y_V8_F___W.B_2QEUK'
@@ -66,7 +67,8 @@ const t2deviceTypes: Record<string, T2Factory> = {
     ['F_C__Y___W.A__QEUK']: F_C__Y___W_A__QEUK,
     // FV1413H2BA front-load washer SoftAP model F_VA_F___W.B__QEUK (deviceType 201)
     ['F_VA_F___W.B__QEUK']: F_V__F___W_B_1QEUK,
-    ['F_V__F___W.B__QEUK']: Y_V8_Y___W_B32QEUK, // FHD1107STB washer/dryer (deviceType 201, clip_hna_v1.9.237) - same AAFF200A record layout as Y_V8_Y___W.B32QEUK, verified against a live unit (idle/drying/cooling states decode correctly)
+    ['H11']: H11, // LG Dishwasher (vendored from upstream PR #139)
+    ['D0210']: H11, // DFB532FP dishwasher (India; announces kind=D0210, H11 packet family)
     ['F_VB_F___W.B_2QEUK']: F_VB_F___W_B_2QEUK, // LG CV74J7S2QA washer/dryer combo
     ['T1789EFH_F']: T1789EFH_F, // LG WT7300CW top-loading washer
     ['RV13U6AM8W_D_US_WIFI']: RV13U6AM8W_D_US_WIFI, // LG DLE7300WE dryer
