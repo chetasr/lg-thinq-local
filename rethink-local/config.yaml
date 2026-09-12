@@ -4,7 +4,7 @@ description: >
   AC units and other ThinQ appliances talk to this server instead of LG's
   cloud; device state is translated to Home Assistant via MQTT discovery.
   No internet required after provisioning.
-version: "1.0.0"
+version: "1.0.1"
 slug: rethink-local
 url: "https://github.com/anszom/rethink"
 arch:
@@ -23,12 +23,16 @@ options:
   mqtt_user: ""
   mqtt_pass: ""
   management_port: 44401
+  device_mqtts_port: 8883
+  device_mqtt_port: 1884
 schema:
   hostname: str
   mqtt_url: str
   mqtt_user: str?
   mqtt_pass: str?
   management_port: port?
+  device_mqtts_port: port?
+  device_mqtt_port: port?
 # Management UI exposed via ingress in the HA sidebar.
 ingress: true
 ingress_port: 44401

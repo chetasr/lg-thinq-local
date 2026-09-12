@@ -13,6 +13,8 @@ MQTT_URL=$(jq -r '.mqtt_url' "$OPTIONS")
 MQTT_USER=$(jq -r '.mqtt_user // ""' "$OPTIONS")
 MQTT_PASS=$(jq -r '.mqtt_pass // ""' "$OPTIONS")
 MGMT_PORT=$(jq -r '.management_port // 44401' "$OPTIONS")
+MQTTS_PORT=$(jq -r '.device_mqtts_port // 8883' "$OPTIONS")
+MQTT_PORT=$(jq -r '.device_mqtt_port // 1884' "$OPTIONS")
 
 # Write config on every start so option changes are picked up.
 cat > "$CONFIG" <<EOF
@@ -28,8 +30,8 @@ cat > "$CONFIG" <<EOF
   "ca_key_file": "/data/ca.key",
   "ca_cert_file": "/data/ca.cert",
   "https_port": 443,
-  "mqtts_port": 8883,
-  "mqtt_port": 1884,
+  "mqtts_port": ${MQTTS_PORT},
+  "mqtt_port": ${MQTT_PORT},
   "thinq1_https_port": 46030,
   "thinq1_port": 47878,
   "management_port": ${MGMT_PORT},
