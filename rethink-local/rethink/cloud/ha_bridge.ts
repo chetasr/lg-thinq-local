@@ -1,6 +1,7 @@
 import POT_056905_WW from './devices/POT_056905_WW'
 import WTDN3 from './devices/WTDN3'
 import RAC_056905_WW from './devices/RAC_056905_WW'
+import RSNQ19KWZE from './devices/RSNQ19KWZE'
 import WIN_056905_WW from './devices/WIN_056905_WW'
 import Dev_2REF11EIDA__4 from './devices/2REF11EIDA__4'
 import Dev_2REF11EBIVPC4 from './devices/2REF11EBIVPC4'
@@ -41,6 +42,15 @@ type T2Factory = new (HA: Connection, thinq: T2Device, metadata: Metadata) => HA
 
 const t1deviceTypes: Record<string, T1Factory> = {
     WTDN3,
+}
+
+/*
+ * Some appliances report a generic ThinQ family modelId but can be told apart
+ * by their real modelName (appInfo.modelName from the deploy message). Keyed
+ * by modelName, checked before the modelId map.
+ */
+const t2modelNameOverrides: Record<string, T2Factory> = {
+    RSNQ19KWZE: RSNQ19KWZE, // cooling-only AC that still ACKs heat mode writes
 }
 
 const t2deviceTypes: Record<string, T2Factory> = {
@@ -108,7 +118,7 @@ class Bridge {
             const devclass = t1deviceTypes[meta.modelId]
             if (devclass) hadevice = new devclass(this.HA, thinqdev, meta)
         } else if (thinqdev.platform === 'thinq2') {
-            const devclass = t2deviceTypes[meta.modelId]
+            const devclass = t2modelNameOverrides[meta.modelName] ?? t2deviceTypes[meta.modelId]
             if (devclass) hadevice = new devclass(this.HA, thinqdev, meta)
         }
 

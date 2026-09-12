@@ -89,6 +89,16 @@ export default class Device extends TLVDevice {
         this.meta = meta
     }
 
+    /*
+     * Op modes offered in the HA climate entity. The device does not expose a
+     * readable capability list (TODO 0x2c1), and it ACKs every op mode write
+     * even when the IDU cannot execute it, so this has to be per-model.
+     * Note this list must include 'off' (handled via power 0x1f7).
+     */
+    protected hvacModes(): string[] {
+        return ['off', 'cool', 'dry', 'fan_only', 'heat', 'auto']
+    }
+
     drop() {
         if (this.tlvBlacklistDisableTimer != undefined) {
             clearTimeout(this.tlvBlacklistDisableTimer)
@@ -336,7 +346,9 @@ export default class Device extends TLVDevice {
                     max_temp: 30,
                     /* TODO: get from 0x2c2 */
                     fan_modes: ['auto', 'very low', 'low', 'medium', 'high', 'very high'],
-                    /* TODO: get allowed op modes from 0x2c1 */
+                    /* TODO: get allowed op modes from 0x2c1 - for now they are
+                     * hard-coded per device class, see hvacModes() */
+                    hvac_modes: this.hvacModes(),
                 } satisfies ClimateComponent,
             },
         })
