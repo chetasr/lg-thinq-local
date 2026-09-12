@@ -1,0 +1,36 @@
+name: "Rethink – LG ThinQ Local Server"
+description: >
+  Fully local replacement for LG's ThinQ cloud (rethink by anszom).
+  AC units and other ThinQ appliances talk to this server instead of LG's
+  cloud; device state is translated to Home Assistant via MQTT discovery.
+  No internet required after provisioning.
+version: "1.0.0"
+slug: rethink-local
+url: "https://github.com/anszom/rethink"
+arch:
+  - aarch64
+  - amd64
+startup: services
+boot: auto
+hassio_api: false
+host_network: true
+init: false
+map:
+  - share:rw
+options:
+  hostname: "rethink.lan"
+  mqtt_url: "mqtt://homeassistant:1883"
+  mqtt_user: ""
+  mqtt_pass: ""
+  management_port: 44401
+schema:
+  hostname: str
+  mqtt_url: str
+  mqtt_user: str?
+  mqtt_pass: str?
+  management_port: port?
+# Management UI exposed via ingress in the HA sidebar.
+ingress: true
+ingress_port: 44401
+panel_icon: mdi:server-network
+panel_title: Rethink

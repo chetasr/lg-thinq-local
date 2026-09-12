@@ -1,0 +1,31 @@
+name: Clear awaiting-response
+
+on:
+    pull_request_target:
+        types: [synchronize, reopened]
+    issue_comment:
+        types: [created]
+    pull_request_review:
+        types: [submitted]
+    pull_request_review_comment:
+        types: [created]
+
+permissions:
+    issues: write
+    pull-requests: write
+
+jobs:
+    unlabel:
+        # Skip plain issues, and only react to the PR author's own push/comment.
+        if: >-
+            (github.event_name != 'issue_comment' || github.event.issue.pull_request) &&
+            github.event.sender.login == (github.event.pull_request.user.login || github.event.issue.user.login)
+        runs-on: ubuntu-slim
+        steps:
+            - env:
+                  GH_TOKEN: ${{ github.token }}
+                  NUM: ${{ github.event.pull_request.number || github.event.issue.number }}
+              run: |
+                  gh api -X DELETE \
+                    "repos/${{ github.repository }}/issues/$NUM/labels/awaiting%20response" \
+                    --silent || true
