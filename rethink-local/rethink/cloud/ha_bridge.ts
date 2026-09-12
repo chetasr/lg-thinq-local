@@ -66,6 +66,7 @@ const t2deviceTypes: Record<string, T2Factory> = {
     ['F_C__Y___W.A__QEUK']: F_C__Y___W_A__QEUK,
     // FV1413H2BA front-load washer SoftAP model F_VA_F___W.B__QEUK (deviceType 201)
     ['F_VA_F___W.B__QEUK']: F_V__F___W_B_1QEUK,
+    ['F_V__F___W.B__QEUK']: F_V__F___W_B_1QEUK, // FHD1107STB front-load washer (deviceType 201, clip_hna_v1.9.237) - reuses the F_V__F___W.B_1QEUK record layout
     ['F_VB_F___W.B_2QEUK']: F_VB_F___W_B_2QEUK, // LG CV74J7S2QA washer/dryer combo
     ['T1789EFH_F']: T1789EFH_F, // LG WT7300CW top-loading washer
     ['RV13U6AM8W_D_US_WIFI']: RV13U6AM8W_D_US_WIFI, // LG DLE7300WE dryer
