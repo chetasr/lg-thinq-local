@@ -4,7 +4,7 @@ description: >
   AC units and other ThinQ appliances talk to this server instead of LG's
   cloud; device state is translated to Home Assistant via MQTT discovery.
   No internet required after provisioning.
-version: "1.0.5"
+version: "1.0.6"
 slug: rethink-local
 url: "https://github.com/anszom/rethink"
 arch:

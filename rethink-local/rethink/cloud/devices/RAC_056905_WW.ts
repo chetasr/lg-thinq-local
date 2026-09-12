@@ -639,8 +639,25 @@ export default class Device extends TLVDevice {
             this.updateClimateAction()
         })
 
-        // 0x21f - "display light" value is inverted in some devices,
-        // but in some devices it is not - not shown in ThinQ app either
+        // 0x21f - "display light". The raw value is inverted on the
+        // RSNQ19KWZE units: 1 = light off, 0 = light on. The device never
+        // reports this field in status packets, so the switch is optimistic
+        // (command-only). Write path verified against all 3 units.
+        const displayLight = {
+            platform: 'switch',
+            unique_id: '$deviceid-displaylight',
+            name: 'Display light',
+            icon: 'mdi:led-outline',
+            command_topic: '$this/displaylight/set',
+            optimistic: true,
+        } as const
+        config['components']['displaylight'] = displayLight
+        this.fields_by_ha['displaylight'] = {
+            name: '',
+            comp: '',
+            id: 0x21f,
+            write_xform: (val) => (val === 'ON' ? 0 : 1),
+        }
 
         if (this.filterLifeTime) {
             const filterUsed = {
